@@ -59,7 +59,16 @@ const getProjectById = asyncWrapper(async (req, res, next) => {
     .json({ status: httpStatusText.SUCCESS, data: project });
 });
 
+const createProject = asyncWrapper(async (req, res) => {
+  await Project.create(req.body);
+  return res.status(201).json({
+    status: httpStatusText.SUCCESS,
+    message: "Project Created Successfully",
+  });
+});
+
 module.exports = {
   getAllProjects,
   getProjectById,
+  createProject,
 };
