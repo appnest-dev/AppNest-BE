@@ -67,8 +67,18 @@ const createProject = asyncWrapper(async (req, res) => {
   });
 });
 
+const updateProject = asyncWrapper(async (req, res) => {
+  const id = req.params.projectId;
+  await Project.update(req.body, { where: { id } });
+  return res.status(200).json({
+    status: httpStatusText.SUCCESS,
+    message: "Project Updated Successfully",
+  });
+});
+
 module.exports = {
   getAllProjects,
   getProjectById,
   createProject,
+  updateProject,
 };
