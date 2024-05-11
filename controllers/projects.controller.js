@@ -76,9 +76,19 @@ const updateProject = asyncWrapper(async (req, res) => {
   });
 });
 
+const deleteProject = asyncWrapper(async (req, res) => {
+  const id = req.params.projectId;
+  await Project.destroy({ where: { id } });
+  return res.status(200).json({
+    status: httpStatusText.SUCCESS,
+    message: "Project Deleted Successfully",
+  });
+});
+
 module.exports = {
   getAllProjects,
   getProjectById,
   createProject,
   updateProject,
+  deleteProject,
 };
