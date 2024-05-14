@@ -1,13 +1,13 @@
-const express = require("express");
-const {
+import { Router } from "express";
+import {
   getAllProjects,
   getProjectById,
   createProject,
   updateProject,
   deleteProject,
-} = require("../controllers/projects.controller");
+} from "../controllers/projects.controller";
 
-const router = express.Router();
+const router = Router();
 
 router.route("/").get(getAllProjects).post(createProject);
 router
@@ -16,4 +16,4 @@ router
   .put(updateProject)
   .delete(deleteProject);
 
-module.exports = router;
+export default router;

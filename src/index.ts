@@ -1,32 +1,32 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
-const express = require("express");
-const cors = require("cors");
+import express, { Application, Request, Response, NextFunction } from "express";
+import cors from "cors";
 
-const sequelize = require("./config/db");
-
-const httpStatusText = require("./utils/httpStatusText");
+import sequelize from "./config/db";
+import httpStatusText from "./utils/httpStatusText";
 
 const PORT = process.env.PORT || 8080;
 
-const app = express();
+const app: Application = express();
 
 app.use(cors());
 app.use(express.json());
 
-const projectsRouter = require("./routes/projects.route");
+import projectsRouter from "./routes/projects.route";
 
 app.use("/api/projects", projectsRouter);
 
-app.all("*", (_req, res, _next) => {
+app.all("*", (_req: Request, res: Response, _next: NextFunction) => {
   return res.status(404).json({
     status: httpStatusText.FAIL,
     message: "this resource is not available",
   });
 });
 
-// global error handler
-app.use((error, _req, res, _next) => {
+// Global error handler
+app.use((error: any, _req: Request, res: Response, _next: NextFunction) => {
   res.status(error.statusCode || 500).json({
     status: error.statusText || httpStatusText.ERROR,
     message: error.message,
