@@ -1,12 +1,16 @@
 {
   "name": "server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "release:major": "standard-version --release-as major"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +32,8 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.2.0",
     "globals": "^15.1.0",
-    "husky": "^9.0.11"
+    "husky": "^9.0.11",
+    "standard-version": "^9.5.0"
   },
   "config": {
     "commitizen": {
