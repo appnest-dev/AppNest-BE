@@ -39,7 +39,7 @@ app.all("*", (_req: Request, res: Response, _next: NextFunction) => {
 app.listen(PORT, async () => {
   console.log(`listening on port ${PORT}`);
   try {
-    await sequelize.authenticate();
+    await sequelize.sync();
     console.log("Connection has been established successfully.");
   } catch (error) {
     console.error("Unable to connect to the database:", error);
