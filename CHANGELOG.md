@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.5](https://github.com/appnest-dev/AppNest-BE/compare/v0.3.4...v0.3.5) (2024-05-31)
+
 ### [0.3.4](https://github.com/appnest-dev/AppNest-BE/compare/v0.3.3...v0.3.4) (2024-05-28)
 
 ### [0.3.3](https://github.com/appnest-dev/AppNest-BE/compare/v0.3.2...v0.3.3) (2024-05-28)
