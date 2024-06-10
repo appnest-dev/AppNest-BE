@@ -52,7 +52,7 @@ Make sure you have the following installed on your local machine:
 [optional footer]
 ```
 
-3.  `npm run release:[patch | minor | major]`
+3. `npm run release:[patch | minor | major]`
 
 ![difference between major, minor and patch](https://res.cloudinary.com/practicaldev/image/fetch/s--l3wtOBiF--/c_limit,f_auto,fl_progressive,q_auto,w_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wjlxt40w9kzayorc9msn.png)
 
