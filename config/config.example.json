@@ -1,0 +1,9 @@
+{
+    "development": {
+      "username": "YOUR DATABASE USERNAME",
+      "password": "YOUR DATABASE PASSWORD",
+      "database": "YOUR DATABASE NAME (eg. test-database-name)",
+      "host": "YOUR HOST (eg. localhost)",
+      "dialect": "YOUR DIALECT (eg. postgres)"
+    }
+}
