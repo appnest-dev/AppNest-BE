@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.7](https://github.com/appnest-dev/AppNest-BE/compare/v0.3.6...v0.3.7) (2024-06-20)
+
+
+### Bug Fixes
+
+* **projects.controller.ts:** add some checks and make errors more clear ([5ba7297](https://github.com/appnest-dev/AppNest-BE/commits5ba729708fa0394a98155bacc023c29d1ca88d93))
+
 ### [0.3.6](https://github.com/appnest-dev/AppNest-BE/compare/v0.3.5...v0.3.6) (2024-05-31)
 
 ### [0.3.5](https://github.com/appnest-dev/AppNest-BE/compare/v0.3.4...v0.3.5) (2024-05-31)
