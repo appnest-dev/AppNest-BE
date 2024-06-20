@@ -23,14 +23,23 @@ Make sure you have the following installed on your local machine:
 
 - `npm install`
 
-**3. make your Postgres database**
+**3. Make your Postgres database**
 
 **4. Set up environment variables**
 
 - `cp .env.example .env`
   **Set it with the right values**
 
-**5. start the server**
+**5. Set up config.json file (like .env file)**
+
+- `cp config/config.example.json config/config.json`
+  **Set it with the right values**
+
+**6. seed initial data**
+
+- `npx sequelize-cli db:seed:all`
+
+**7. Start the server**
 
 - `npm run dev`
 
