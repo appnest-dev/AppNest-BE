@@ -73,7 +73,19 @@ export const getProjectById = asyncWrapper(
 );
 
 export const createProject = asyncWrapper(
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request, res: Response, next): Promise<void> => {
+    const project = await Project.findOne({
+      where: { project_id: req.body.project_id },
+    });
+    if (project) {
+      const error = AppError.create(
+        "project ID should be unique",
+        400,
+        httpStatusText.FAIL
+      );
+      return next(error);
+    }
+
     await Project.create(req.body);
     res.status(201).json({
       status: httpStatusText.SUCCESS,
@@ -83,8 +95,19 @@ export const createProject = asyncWrapper(
 );
 
 export const updateProject = asyncWrapper(
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request, res: Response, next): Promise<void> => {
     const id = req.params.projectId;
+
+    const project = await Project.findOne({ where: { project_id: id } });
+    if (!project) {
+      const error = AppError.create(
+        "Project not found",
+        400,
+        httpStatusText.FAIL
+      );
+      return next(error);
+    }
+
     await Project.update(req.body, { where: { id } });
     res.status(200).json({
       status: httpStatusText.SUCCESS,
@@ -94,8 +117,19 @@ export const updateProject = asyncWrapper(
 );
 
 export const deleteProject = asyncWrapper(
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request, res: Response, next): Promise<void> => {
     const id = req.params.projectId;
+
+    const project = await Project.findOne({ where: { project_id: id } });
+    if (!project) {
+      const error = AppError.create(
+        "Project not found",
+        400,
+        httpStatusText.FAIL
+      );
+      return next(error);
+    }
+
     await Project.destroy({ where: { id } });
     res.status(200).json({
       status: httpStatusText.SUCCESS,
