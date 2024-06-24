@@ -7,7 +7,7 @@ interface ProjectAttributes {
   id: string;
   project_title: string;
   project_id: string;
-  project_members: string[];
+  project_members: string;
   tasks_manager_url?: string;
   brand_guideline_url?: string;
   ui_ux_url?: string;
@@ -29,7 +29,7 @@ class Project
   public id!: string;
   public project_title!: string;
   public project_id!: string;
-  public project_members!: string[];
+  public project_members!: string;
   public tasks_manager_url?: string;
   public brand_guideline_url?: string;
   public ui_ux_url?: string;
@@ -57,8 +57,15 @@ Project.init(
       unique: true,
     },
     project_members: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.STRING,
       allowNull: false,
+      get() {
+        const rawValue = this.getDataValue("project_members");
+        return rawValue ? JSON.parse(rawValue) : [];
+      },
+      set(value: string[]) {
+        this.setDataValue("project_members", JSON.stringify(value));
+      },
     },
     tasks_manager_url: {
       type: DataTypes.TEXT,
