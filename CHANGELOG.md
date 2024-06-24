@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/appnest-dev/AppNest-BE/compare/v0.4.0...v0.4.1) (2024-06-24)
+
+
+### Features
+
+* make the db for sqlite in testing mode and for postgres in dev ([f3514dc](https://github.com/appnest-dev/AppNest-BE/commitsf3514dc56d883b9a9495d79662ab13ae7c5a6191))
+* testing initial commit ([bcf281e](https://github.com/appnest-dev/AppNest-BE/commitsbcf281e1e82a5fa31815e89df185f76fdf31e918))
+
+
+### Refactor
+
+* **index.ts:** change index file for ability to test ([6fed2d8](https://github.com/appnest-dev/AppNest-BE/commits6fed2d876faaa04b17eddf47333a07d5a5bd93eb))
+
 ## [0.4.0](https://github.com/appnest-dev/AppNest-BE/compare/v0.3.7...v0.4.0) (2024-06-20)
 
 ### [0.3.7](https://github.com/appnest-dev/AppNest-BE/compare/v0.3.6...v0.3.7) (2024-06-20)
