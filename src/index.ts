@@ -7,10 +7,11 @@ import sequelize from "./config/db";
 import httpStatusText from "./utils/httpStatusText";
 import projectsRouter from "./routes/projects.route";
 import healthChecker from "./routes/healthChecker.route";
+import { Server } from "http";
 
-const PORT = process.env.PORT || 8080;
+export const app: Application = express();
 
-const app: Application = express();
+let server: Server;
 
 app.use(cors());
 app.use(express.json());
@@ -36,12 +37,25 @@ app.all("*", (_req: Request, res: Response, _next: NextFunction) => {
   });
 });
 
-app.listen(PORT, async () => {
-  console.log(`listening on port ${PORT}`);
+export async function startServer(port: number) {
   try {
     await sequelize.sync();
     console.log("Connection has been established successfully.");
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
-});
+  server = app.listen(port, async () => {
+    console.log(`listening on port ${port}`);
+  });
+}
+
+export async function stopServer() {
+  if (server) {
+    server.close();
+  }
+}
+
+if (require.main === module) {
+  const PORT = process.env.PORT || 8080;
+  startServer(+PORT);
+}
