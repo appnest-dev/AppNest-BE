@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Op } from "sequelize";
+import { Op, OrderItem } from "sequelize";
 import asyncWrapper from "../middlewares/asyncWrapper";
 import Project from "../models/project.model";
 import AppError from "../utils/AppError";
@@ -22,35 +22,31 @@ export const getAllProjects = asyncWrapper(
     const limit = parseInt(query.pageSize || "5");
     const offset = (page - 1) * limit;
 
+    let where = {};
     const filter = query.filter;
-    const filterKey = filter && Object.keys(filter)[0];
-    const filterOperation =
-      filter &&
-      (Object.keys(filter[filterKey as string] || {})[0].slice(
-        1
-      ) as keyof typeof Op);
-    const filterValue =
-      filter && filter[filterKey as string][`$${filterOperation}`];
-    const filterExists = !!filterKey && !!filterOperation && !!filterValue;
+    if (filter) {
+      const filterKey = Object.keys(filter)[0];
+      const filterOperation = Object.keys(filter[filterKey])[0].slice(1);
+      const filterValue = filter[filterKey][`$${filterOperation}`];
+      where = {
+        [filterKey]: {
+          [Op[filterOperation as keyof typeof Op]]: filterValue,
+        },
+      };
+    }
 
-    // filter Example                                  filterKey   filterOp    filterValue
-    // filter[project_id][$eq]=new_project_id_2 => { project_id: { '$eq': 'new_project_id_3' } }
-
+    let order: OrderItem[] = [];
     const sort = query.sort;
-    const sortKey = sort && sort.split(":")[0];
-    const sortMethod = (sort && sort.split(":")[1].toUpperCase()) || "ASC";
+    if (sort) {
+      const [sortKey, sortMethod] = sort.split(":");
+      order = [[sortKey, sortMethod.toUpperCase() || "ASC"]];
+    }
 
     const projects = await Project.findAll({
       offset,
       limit,
-      ...(filterExists && {
-        where: {
-          [filterKey]: {
-            [Op[filterOperation]]: filterValue,
-          },
-        },
-      }),
-      ...(sortKey && { order: [[sortKey, sortMethod]] }),
+      where,
+      order,
     });
 
     res.status(200).json({ status: httpStatusText.SUCCESS, data: projects });
@@ -68,24 +64,17 @@ export const getProjectById = asyncWrapper(
       );
       return next(error);
     }
-    res.status(200).json({ status: httpStatusText.SUCCESS, data: project });
+
+    res.status(200).json({
+      status: httpStatusText.SUCCESS,
+      message: "Project Found Successfully",
+      data: project,
+    });
   }
 );
 
 export const createProject = asyncWrapper(
-  async (req: Request, res: Response, next): Promise<void> => {
-    const project = await Project.findOne({
-      where: { project_id: req.body.project_id },
-    });
-    if (project) {
-      const error = AppError.create(
-        "project ID should be unique",
-        400,
-        httpStatusText.FAIL
-      );
-      return next(error);
-    }
-
+  async (req: Request, res: Response): Promise<void> => {
     await Project.create(req.body);
     res.status(201).json({
       status: httpStatusText.SUCCESS,
@@ -98,20 +87,21 @@ export const updateProject = asyncWrapper(
   async (req: Request, res: Response, next): Promise<void> => {
     const id = req.params.projectId;
 
-    const project = await Project.findOne({ where: { project_id: id } });
+    const project = await Project.findByPk(id);
     if (!project) {
       const error = AppError.create(
-        "Project not found",
-        400,
+        "Project Not Found",
+        404,
         httpStatusText.FAIL
       );
       return next(error);
     }
 
-    await Project.update(req.body, { where: { id } });
+    await project.update(req.body);
     res.status(200).json({
       status: httpStatusText.SUCCESS,
       message: "Project Updated Successfully",
+      data: project,
     });
   }
 );
@@ -120,10 +110,10 @@ export const deleteProject = asyncWrapper(
   async (req: Request, res: Response, next): Promise<void> => {
     const id = req.params.projectId;
 
-    const project = await Project.findOne({ where: { project_id: id } });
+    const project = await Project.findByPk(id);
     if (!project) {
       const error = AppError.create(
-        "Project not found",
+        "Project Not Found",
         400,
         httpStatusText.FAIL
       );
