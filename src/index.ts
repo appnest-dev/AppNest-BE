@@ -8,6 +8,7 @@ import httpStatusText from "./utils/httpStatusText";
 import projectsRouter from "./routes/projects.route";
 import healthChecker from "./routes/healthChecker.route";
 import { Server } from "http";
+import { UniqueConstraintError, ValidationError } from "sequelize";
 
 export const app: Application = express();
 
@@ -22,6 +23,19 @@ app.use("/api/projects", projectsRouter);
 
 // Global error handler
 app.use((error: any, _req: Request, res: Response, _next: NextFunction) => {
+  // Handle Sequelize models errors
+  if (
+    error instanceof ValidationError ||
+    error instanceof UniqueConstraintError
+  ) {
+    return res.status(400).json({
+      status: httpStatusText.FAIL,
+      message: error.message,
+      code: 400,
+      data: null,
+    });
+  }
+
   res.status(error.statusCode || 500).json({
     status: error.statusText || httpStatusText.ERROR,
     message: error.message,
