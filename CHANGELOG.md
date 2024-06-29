@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://github.com/appnest-dev/AppNest-BE/compare/v0.4.1...v0.4.2) (2024-06-29)
+
+
+### Features
+
+* add more utilities ([84789f4](https://github.com/appnest-dev/AppNest-BE/commits84789f4c9e3dc9d96b9b7fe3a861dcf7c3e44676))
+* **projects.route.ts:** change put to patch ([685aab6](https://github.com/appnest-dev/AppNest-BE/commits685aab60b15582f2155f882eba9a58f112ad91cc))
+
+
+### Bug Fixes
+
+* **index.ts:** handle sequelize validation errors ([631c0bf](https://github.com/appnest-dev/AppNest-BE/commits631c0bf221cf30eda45b87ae6ff06d63af1c0a9d))
+* **projects.controller.ts:** fix 'find where project_id' and make it 'find by primary key' ([cbdef1c](https://github.com/appnest-dev/AppNest-BE/commitscbdef1c162def0e746cb8651b2ccb9bd6bd4806a))
+
+
+### Refactor
+
+* **project.model.ts:** change validation logic to the model ([b2391f5](https://github.com/appnest-dev/AppNest-BE/commitsb2391f55d89ee6cf87b93311dbc6b22bd0f9c956))
+
 ### [0.4.1](https://github.com/appnest-dev/AppNest-BE/compare/v0.4.0...v0.4.1) (2024-06-24)
 
 
