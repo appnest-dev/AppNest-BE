@@ -13,7 +13,7 @@ router.route("/").get(getAllProjects).post(createProject);
 router
   .route("/:projectId")
   .get(getProjectById)
-  .put(updateProject)
+  .patch(updateProject)
   .delete(deleteProject);
 
 export default router;
